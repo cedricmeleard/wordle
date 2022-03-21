@@ -1,0 +1,15 @@
+{
+  "name": "wordle-dojo",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "prestart": "tsc",
+    "start": "node ./built/index.js"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.4.1",
+    "jest": "^27.5.1",
+    "ts-jest": "^27.1.3",
+    "typescript": "^4.6.2"
+  }
+}
