@@ -1,5 +1,9 @@
 export default class Dummy {
-    getDummyValue(): string {
-        return "I'm alive"
+
+    //a function that say hello to usen
+    sayHello(userName: string): any {
+        return `Hello ${userName}`
     }
+
+
 }

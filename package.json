@@ -3,6 +3,7 @@
   "license": "MIT",
   "scripts": {
     "test": "jest",
+    "test-watch": "jest --watch",
     "prestart": "tsc",
     "start": "node ./built/index.js"
   },

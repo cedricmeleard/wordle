@@ -5,4 +5,4 @@ import Dummy from "./Dummy"
  */
 
 const dummy = new Dummy()
-console.log(dummy.getDummyValue())
+console.log(dummy.sayHello("World"))
