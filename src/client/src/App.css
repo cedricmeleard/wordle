@@ -1,0 +1,31 @@
+* {
+  box-sizing: border-box;
+  --dark-color: #2f323a;
+  --primary-color: #debac0;
+  --secondary-color: #c47ac0;
+}
+body {
+  background-color: var(--dark-color);
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.App-fields {
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+}
+.input {
+  margin-right: 15px;
+  height: 2rem;
+  padding: 0 10px;
+}
+
+.primary-btn {
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 10%;
+  cursor: pointer;
+}

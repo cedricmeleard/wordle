@@ -1,0 +1,19 @@
+.Letter {
+  width: 60px;
+  height: 60px;
+  border: solid 1px lightgrey;
+  margin: 5px;
+  border-radius: 10%;
+  font-size: 2em;
+  line-height: 50px;
+  text-align: center;
+  color: white;
+}
+
+.Letter.Green {
+  background-color: lightgreen;
+}
+
+.Letter.Orange {
+  background-color: lightsalmon;
+}
