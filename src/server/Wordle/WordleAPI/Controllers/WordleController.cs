@@ -6,44 +6,56 @@ namespace WordleAPI.Controllers
 {
     [EnableCors("AllowCorsPolicy")]
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class WordleController : ControllerBase
     {
-        private static string currentWord;
-        private static readonly Dictionary<string, WordleGame> games = new();
         private readonly ILogger<WordleController> _logger;
+        private static WordleService _service;
+        WordleService WordleService
+        {
+            get
+            {
+                if (_service == null)
+                {
+                    _service = new();
+                }
+                return _service;
+            }
+        }
 
         public WordleController(ILogger<WordleController> logger)
         {
             _logger = logger;
         }
 
-        
+
         [HttpPost(Name = "Start")]
-        public WordleGameDto Start(string userId)
+        public WordleGameDto Start([FromQuery()]string userId)
         {
+            _logger.LogDebug("Starting new game");
+
             if (userId == null)
                 throw new ArgumentNullException(nameof(userId));
 
-            if (games.ContainsKey(userId))
-                return new WordleGameDto(games[userId]);
+            var game = WordleService.StartGame(userId);
 
-            var newgame = new WordleService().StartGame();
-            games.Add(userId, newgame);
-
-            return new WordleGameDto( newgame );
+            return new WordleGameDto(game);
         }
 
-        [HttpPut(Name = "Try")]
-        public WordleGameDto Try(string userId, string word)
+        [HttpPost(Name = "Try")]
+        public WordleGameDto Try([FromQuery()] string userId, [FromQuery()] string word)
         {
-            if (!games.ContainsKey(userId))
-                throw new KeyNotFoundException(nameof(userId));
+            _logger.LogDebug($"Trying the word {word}");
 
-            var game = games[userId];
-
-            game  = new WordleService().TryWord(game, word);
+            var game = WordleService.TryWord(userId, word);
             return new WordleGameDto(game);
+        }
+
+        [HttpPost(Name = "Reset")]
+        public bool Reset([FromQuery()] string userId)
+        {
+            _logger.LogDebug($"Reset game for user {userId}");
+            return WordleService.Reset(userId);
         }
     }
 }

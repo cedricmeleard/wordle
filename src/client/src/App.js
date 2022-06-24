@@ -10,11 +10,11 @@ function App() {
   const userid = "fakeid";
 
   useEffect(() => {
-    axios.post(`https://localhost:7296/Wordle?userId=${userid}`).then(res => setLines(res.data.lines));
+    axios.post(`https://localhost:7296/Wordle/Start?userId=${userid}`).then(res => setLines(res.data.lines));
   }, []);
 
   function AddLine() {
-    axios.put(`https://localhost:7296/Wordle?userId=${userid}&word=${word}`).then(res => {
+    axios.post(`https://localhost:7296/Wordle/Try?userId=${userid}&word=${word}`).then(res => {
       setLines(res.data.lines);
       setWord("");
     });

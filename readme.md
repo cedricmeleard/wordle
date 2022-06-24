@@ -75,6 +75,34 @@ Exemple de rendu (non obligatoire)
 - En tant que joueur, si une fait partie du mot, mais n'est pas correctement placée, alors j'ai un indicateur qui me le confirme
 - En tant que joueur, si mon mot n'est pas valide, alors je ne peux pas valider ma ligne
 
+## TODO
+
+### Démarrage
+
+Le jeux se lance avec 2 commandes lines, pour le client (en react) et le server (Core .Net).
+Il y a donc des pré-requis qui sont Node.js et .NetCore, un IDE (Vs Code et/ou Visual Studio).
+
+- Pour le Lancement du serveur, aller dans **src/server** puis lancer la commande
+  ```dotnet watch run --project .\WordleAPI\WordleAPI.csproj```
+  le watch est optionnel, surtout si vous lancer les test (au moins au début du Dojo car le code est refactorer)
+  Pour lancer les test
+  ```dotnet watch test --project .\Wordle.Test\Wordle.Test.csproj```
+- Pour le lancement du client, aller dans **src/client** puis lancer la commande
+  ```npm install && npm start```
+  Pour le client les tests sont prets a être créés mais l'app n'est pas couverte (vous êtes invités à les ajouter)
+
+### Point à faire pour l'échauffement / entrainement
+
+Spoiler, ci-dessous certains problèmes sont mis en avant, et peuvent "gacher" un peu le dojos
+
+- Ajouter la gestion de la fin de partie (éventuellement implémenter la fin dans le client, sinon un reset est disponible dans l'API et utilisable avec swagger)
+- Refactorer le service
+- Corriger le probleme lié aux lettres positionnée incorrectement qui remontent un peu trop ;)
+- Vérifier que le mot saisi existe bien, vérfier qu'il fait exacement 5 lettres
+- Si le refactoring n'est pas allé jusque là, inverser la dépendance entre les repository, et le service
+- Appliquer les principes SOLID dans l'ensemble
+- Eviter les types primitifs
+
 ## Help
 
 Une liste de 5070 mots de 5 lettres est disponible dans le fichier ```./assets/5_letter_words_FR.txt``` et peut servir de base pour
@@ -87,6 +115,7 @@ Il est possible de changer les couleurs d'affichage de la console
 ```js
 console.log('\x1b[42m\x1b[1m%s1\x1b[40m\x1b[37m%s2', "t", "arie");
 ```
+
 ```%sX``` représente l'argument, ici "t" puis "arie"
 ```\x1b[40m\x1b[37m``` est le code de couleur, ici fond noir ```x1b[40m``` et couleur blanche de text ```\x1b[37m```
 
@@ -119,7 +148,6 @@ BgMagenta = "\x1b[45m"
 BgCyan = "\x1b[46m"
 BgWhite = "\x1b[47m"
 ```
-
 
 ## Outils (pré requis)
 

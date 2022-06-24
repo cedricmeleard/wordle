@@ -5,7 +5,6 @@ namespace Wordle
     public class WordleGame
     {
         public int Essais { get; private set; } = 0;
-        private string _word;
         public string Word { get; private set; }
         public Letter[][] Lines { get; private set; } = new Letter[5][];
 
