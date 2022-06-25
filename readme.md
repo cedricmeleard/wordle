@@ -3,6 +3,8 @@
 Le but du Dojo va être de recréer un système équivalent au jeu wordle,
 en respectant certaines règles. Ces réèles seront à affiner en début de Dojo.
 
+Une autre version est d'utiliser le template de code est fourni afin de lancer le jeux, ce code doit être refactoré car il ne respecte pas les bonnes pratiques
+
 ## Format du Dojo
 
 On se base sur une expérience de Dojo de 1h.
@@ -44,10 +46,10 @@ Ces règles sont a définir en début de Dojo
 ## Principes
 
 Pour rappeler le déroulé du Dojo, le principe est simple, il s'agit d'expérimenter un travail collaboratif afin de résoudre une problématique entre profesionnels, sous contraintes.
-La finalité n'est pas de réussir à produire le résultat attendu, mais bien d'expérimenter les pratiques de conception logiciel utilisées dans l'Xtrem Programing et plus généralement le Test Driven Development.
+La finalité n'est pas de réussir à produire le résultat attendu, mais bien d'expérimenter les pratiques de conception logiciel utilisées dans l'Xtrem Programing comme le Test Driven Development.
 Ce qu'il faut retenir, c'est qu'il vaut mieux éviter d'apprendre sur la production, et de s'entrainer en amont sans risque.
 Pour donner une image
-> c'est commet si un couple qui réalise du patinage artistique construisait sa chorégraphie directement pendant le concours...
+> Un couple de  patinage artistique construisait juste avant d'aller sur la galce:
 > "Je vais te lancer pour que tu fasses un triple boucle et je te rattrape par une lame pour faire un 720°, vas-y on tente, ça va bien se passer"
 > Non ces profressionnels s'entrainent avant 😉
 
@@ -55,12 +57,11 @@ Pour donner une image
 
 comment jouer ?
 
-- Proposez des mots de 5 lettres, en Français (le mot doit être valide).
+- Vous proposez des mots de 5 lettres, en Français (le mot doit être valide).
 - Les bonnes lettres au bon endroit seront en vert, les bonnes lettres aux mauvais endroits seront en orange, les mauvaises en grises.
 - Vous avez 6 essais pour trouver le bon mot.
-- Il n'y a qu'un seul mot par jour à l'échelle mondiale
 
-Exemple de rendu (non obligatoire)
+Exemple de rendu (du site <https://wordle.louan.me/>)
 
 ![exemple de partie](./assets/Screenshot_20220320-210347.jpg)
 
@@ -84,7 +85,7 @@ Il y a donc des pré-requis qui sont Node.js et .NetCore, un IDE (Vs Code et/ou 
 
 - Pour le Lancement du serveur, aller dans **src/server** puis lancer la commande
   ```dotnet watch run --project .\WordleAPI\WordleAPI.csproj```
-  le watch est optionnel, surtout si vous lancer les test (au moins au début du Dojo car le code est refactorer)
+  le watch est optionnel, surtout si vous lancez les test (au moins au début du Dojo car le code est a refactorer)
   Pour lancer les test
   ```dotnet watch test --project .\Wordle.Test\Wordle.Test.csproj```
 - Pour le lancement du client, aller dans **src/client** puis lancer la commande
@@ -100,7 +101,7 @@ Spoiler, ci-dessous certains problèmes sont mis en avant, et peuvent "gacher" u
 - Corriger le probleme lié aux lettres positionnée incorrectement qui remontent un peu trop ;)
 - Vérifier que le mot saisi existe bien, vérfier qu'il fait exacement 5 lettres
 - Si le refactoring n'est pas allé jusque là, inverser la dépendance entre les repository, et le service
-- Appliquer les principes SOLID dans l'ensemble
+- Appliquer les principes SOLID dans l' (par exemple séparer la récupération des mots et des jeux en cours)
 - Eviter les types primitifs
 
 ## Help

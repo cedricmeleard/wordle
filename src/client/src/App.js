@@ -22,6 +22,7 @@ function App() {
 
   return (
     <div className="App">
+      <h1 className="title">Wordle like Dojo</h1>
       <div className="App-fields">
         <input className="input" type="text" placeholder="Mot..." value={word} onChange={e => setWord(e.target.value)} />
         <button className="primary-btn" onClick={() => AddLine()}>

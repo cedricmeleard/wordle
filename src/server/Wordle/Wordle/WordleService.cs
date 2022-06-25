@@ -7,7 +7,7 @@ public class WordleService
     readonly List<string> previousWords;
     static Dictionary<string, WordleGame> _games;
 
-   public WordleService()
+    public WordleService()
     {
         wordRepository = new WordRepository();
         previousWords = new List<string>();
@@ -25,10 +25,9 @@ public class WordleService
         if (string.IsNullOrWhiteSpace(userId))
             throw new ArgumentNullException(nameof(userId));
 
-
         if (_games.ContainsKey(userId))
             return _games[userId];
-        
+
         /* Call repository to get a new currentWord */
         var word = wordRepository.GetWord();
         while (previousWords.Contains(word))
@@ -39,7 +38,7 @@ public class WordleService
 
         var game = new WordleGame(word);
         _games.Add(userId, game); ;
-        
+
         return game;
     }
 

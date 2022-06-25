@@ -4,6 +4,7 @@ namespace Wordle
 {
     public class WordRepository
     {
+        private static Random randomizer = new Random(DateTime.Now.DayOfYear);
         public string GetWord()
         {
             string wordsFromFile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"datas\5_letter_words_FR.txt");
@@ -13,7 +14,7 @@ namespace Wordle
                 .Where(w => !string.IsNullOrWhiteSpace(w))
                 .ToArray();
 
-            return words[new Random(DateTime.Now.DayOfYear).Next(0, 5069)];
+            return words[randomizer.Next(0, 5069)];
         }
     }
 }
