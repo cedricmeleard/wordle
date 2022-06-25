@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Wordle
+namespace Wordle.Domain
 {
     public class WordleGame
     {
@@ -16,7 +16,7 @@ namespace Wordle
         internal void AddLine(Letter[] letters)
         {
             Lines[Essais] = letters;
-            this.Essais++;
+            Essais++;
         }
     }
 }

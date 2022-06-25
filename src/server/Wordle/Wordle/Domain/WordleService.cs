@@ -1,17 +1,16 @@
 ﻿using Wordle.Exceptions;
+using Wordle.Infra;
 
-namespace Wordle;
+namespace Wordle.Domain;
 public class WordleService
 {
-    readonly WordRepository wordRepository;
-    readonly List<string> previousWords;
-    static Dictionary<string, WordleGame> _games;
+    readonly IProvideWord wordAdapter;
+    readonly IProvideGame gameAdapter;
 
-    public WordleService()
+    public WordleService(IProvideWord wordProvider, IProvideGame gameProvider)
     {
-        wordRepository = new WordRepository();
-        previousWords = new List<string>();
-        _games = new Dictionary<string, WordleGame>();
+        wordAdapter = wordProvider;
+        gameAdapter = gameProvider;
     }
 
     /// <summary>
@@ -25,21 +24,13 @@ public class WordleService
         if (string.IsNullOrWhiteSpace(userId))
             throw new ArgumentNullException(nameof(userId));
 
-        if (_games.ContainsKey(userId))
-            return _games[userId];
+        //game may already exist then shoudl return it
+        var game = gameAdapter.Find(userId);
+        if (game != null)
+            return game;
 
-        /* Call repository to get a new currentWord */
-        var word = wordRepository.GetWord();
-        while (previousWords.Contains(word))
-        {
-            word = wordRepository.GetWord();
-        }
-        previousWords.Add(word);
-
-        var game = new WordleGame(word);
-        _games.Add(userId, game); ;
-
-        return game;
+        return gameAdapter
+            .Create(userId, wordAdapter.NewWord());
     }
 
     /// <summary>
@@ -56,9 +47,10 @@ public class WordleService
             throw new ArgumentNullException(nameof(userId));
         if (string.IsNullOrWhiteSpace(word))
             throw new ArgumentNullException(nameof(word));
-        if (!_games.ContainsKey(userId))
-            throw new GameNotFoundException(nameof(_games));
-        var game = _games[userId];
+
+        var game = gameAdapter.Find(userId);
+        if (game == null)
+            throw new GameNotFoundException(nameof(userId));
         if (game.Essais == 5)
             throw new GameEndedException(nameof(game));
 
@@ -90,9 +82,6 @@ public class WordleService
     /// <returns></returns>
     public bool Reset(string userId)
     {
-        if (!_games.ContainsKey(userId))
-            return false;
-
-        return _games.Remove(userId);
+        return gameAdapter.Delete(userId);
     }
 }

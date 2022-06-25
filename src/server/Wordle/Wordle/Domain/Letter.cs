@@ -1,4 +1,4 @@
-﻿namespace Wordle
+﻿namespace Wordle.Domain
 {
     public class Letter
     {
@@ -7,8 +7,8 @@
 
         public Letter(string letter, int validity)
         {
-            this.Value = letter;
-            this.Validity = validity;
+            Value = letter;
+            Validity = validity;
         }
     }
 }

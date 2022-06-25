@@ -1,4 +1,4 @@
-﻿using Wordle;
+﻿using Wordle.Domain;
 
 namespace WordleAPI.Controllers
 {

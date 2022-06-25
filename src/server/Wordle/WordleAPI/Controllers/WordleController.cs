@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Wordle;
+using Wordle.Domain;
+using Wordle.Repositories;
 
 namespace WordleAPI.Controllers
 {
@@ -17,7 +18,10 @@ namespace WordleAPI.Controllers
             {
                 if (_service == null)
                 {
-                    _service = new();
+                    _service = new(
+                        new WordInMermoryRepository(),
+                        new GameInMemoryRepository()
+                        );
                 }
                 return _service;
             }

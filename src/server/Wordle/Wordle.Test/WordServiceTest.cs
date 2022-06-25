@@ -1,14 +1,24 @@
+using Wordle.Domain;
 using Wordle.Exceptions;
+using Wordle.Repositories;
 
 namespace Wordle.Test;
 
 public class WordServiceTest
 {
+    private static WordleService CreateWordleService()
+    {
+        return new WordleService(
+            new WordInMermoryRepository(),
+            new GameInMemoryRepository()
+            );
+    }
+
     [Fact]
     public void start_new_game()
     {
         var userID = "fakeid";
-        WordleService sut = new WordleService();
+        WordleService sut = CreateWordleService();
         
         var newGame = sut.StartGame(userID);
 
@@ -21,7 +31,7 @@ public class WordServiceTest
     public void start_new_game_when_already_started_should_return_same()
     {
         var userID = "fakeid";
-        WordleService sut = new WordleService();
+        WordleService sut = CreateWordleService();
 
         var newGame = sut.StartGame(userID);
         var sameGame = sut.StartGame(userID);
@@ -31,7 +41,7 @@ public class WordServiceTest
     [Fact]
     public void start_2_games()
     {
-        WordleService sut = new WordleService();
+        WordleService sut = CreateWordleService();
 
         var newGame = sut.StartGame("fakeid");
         var otherGame = sut.StartGame("fakeid2");
@@ -43,7 +53,7 @@ public class WordServiceTest
     public void start_new_game_with_user_null_should_thow()
     {
         var userID = "";
-        WordleService sut = new WordleService();
+        WordleService sut = CreateWordleService();
 
         Assert.Throws<ArgumentNullException>(() => sut.StartGame(userID));
     }
@@ -52,7 +62,7 @@ public class WordServiceTest
     public void try_word()
     {
         var userID = "fakeid";
-        WordleService sut = new WordleService();
+        WordleService sut = CreateWordleService();
 
         sut.StartGame(userID);
         var gameWithOneTry = sut.TryWord(userID, "poule");
@@ -65,7 +75,7 @@ public class WordServiceTest
     public void try_word_when_word_is_empty_throw()
     {
         var userID = "fakeid";
-        WordleService sut = new WordleService();
+        WordleService sut = CreateWordleService();
         sut.StartGame(userID);
         Assert.Throws<ArgumentNullException>(() => sut.TryWord(userID, String.Empty));
     }
@@ -73,7 +83,7 @@ public class WordServiceTest
     [Fact]
     public void try_word_when_user_is_empty_throw()
     {
-        WordleService sut = new WordleService();
+        WordleService sut = CreateWordleService();
         Assert.Throws<ArgumentNullException>(() => sut.TryWord(String.Empty, "poule"));
     }
 
@@ -81,7 +91,7 @@ public class WordServiceTest
     public void try_word_when_no_game_should_throw()
     {
         var userID = "fakeid";
-        WordleService sut = new WordleService();
+        WordleService sut = CreateWordleService();
         Assert.Throws<GameNotFoundException>(() => sut.TryWord(userID, "aaaaa"));
     }
 
@@ -89,7 +99,7 @@ public class WordServiceTest
     public void try_word_twice()
     {
         var userID = "fakeid";
-        WordleService sut = new WordleService();
+        WordleService sut = CreateWordleService();
         sut.StartGame(userID);
 
         sut.TryWord(userID, "poule");
@@ -105,7 +115,7 @@ public class WordServiceTest
     public void try_word_too_much_should_throw()
     {
         var userID = "fakeid";
-        WordleService sut = new WordleService();
+        WordleService sut = CreateWordleService();
         sut.StartGame(userID);
 
         sut.TryWord(userID, "aaaaa");
@@ -120,7 +130,7 @@ public class WordServiceTest
     public void Reset_game_when_no_game_should_return_false()
     {
         var userID = "fakeid";
-        WordleService sut = new WordleService();
+        WordleService sut = CreateWordleService();
         Assert.False( sut.Reset(userID));
     }
 
@@ -128,7 +138,7 @@ public class WordServiceTest
     public void Reset_game_when_game_exist_should_return_true()
     {
         var userID = "fakeid";
-        WordleService sut = new WordleService();
+        WordleService sut = CreateWordleService();
         sut.StartGame(userID);
         var game = sut.TryWord(userID, "aaaaa");
         Assert.Equal("a", game.Lines[0][3].Value);
