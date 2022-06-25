@@ -2,10 +2,10 @@
 {
     public class Letter
     {
-        public string Value { get; private set; }
+        public char Value { get; private set; }
         public int Validity { get; private set; }
 
-        public Letter(string letter, int validity)
+        public Letter(char letter, int validity)
         {
             Value = letter;
             Validity = validity;

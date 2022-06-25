@@ -54,25 +54,59 @@ public class WordleService
         if (game.Essais == 5)
             throw new GameEndedException(nameof(game));
 
-        var line = new Letter[5];
-        for (int i = 0; i < 5; i++)
+        var line = CreateLine(word, game.Word);
+        game.AddLine(line);
+
+        return game;
+    }
+
+    private Letter[] CreateLine(string word, string wordToFind)
+    {
+        var length = word.Length;
+        var line = new Letter[length];
+
+        //first we check only correct & inccorect lettters
+        for (int i = 0; i < length; i++)
         {
-            if (game.Word[i] == word[i])
+            var currentLetter = word[i];
+            if (IsCorrectlyPlaced(wordToFind, i, currentLetter))
             {
-                line[i] = new Letter(word[i].ToString(), 1);
+                line[i] = new Letter(currentLetter, 1);
             }
-            else if (game.Word.Contains(word[i]))
+            if (NotExistInWord(wordToFind, currentLetter))
             {
-                line[i] = new Letter(word[i].ToString(), 2);
-            }
-            else
-            {
-                line[i] = new Letter(word[i].ToString(), 0);
+                line[i] = new Letter(currentLetter, 0);
             }
         }
+        
+        //last we check misplaced
+        for (int i = 0; i < length; i++)
+        {
+            // already found 1 or 0
+            if (line[i] != null)
+                continue;
+            
+            var currentLetter = word[i];
+            // total number of this letter to find
+            var nbPresentInWordToGuess = wordToFind.Count(p => p == currentLetter);
+            // minus already found
+            var nbPresentActuallyFound = line.Count(p => p != null && p.Value == currentLetter && p.Validity != 0);
+            // so there is still letter to find
+            line[i] = new Letter(currentLetter, nbPresentInWordToGuess - nbPresentActuallyFound  > 0 ? 2 : 0);
+        }
 
-        game.AddLine(line);
-        return game;
+        return line;
+
+    }
+
+    private bool NotExistInWord(string wordToFind, char currentLetter)
+    {
+        return !wordToFind.Contains(currentLetter);
+    }
+
+    private bool IsCorrectlyPlaced(string wordToFind, int i, char currentLetter)
+    {
+        return wordToFind[i] == currentLetter;
     }
 
     /// <summary>
