@@ -18,8 +18,11 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore .\src\server\Wordle\Wordle.sln
+      run: dotnet restore
+      working-directory : src/server/Wordle
     - name: Build
-      run: dotnet build --no-restore .\src\server\Wordle\Wordle.sln
+      run: dotnet build --no-restore
+      working-directory : src/server/Wordle
     - name: Test
-      run: dotnet test --no-build --verbosity normal .\src\server\Wordle\Wordle.Test\Wordle.Test.csproj
+      run: dotnet test --no-build --verbosity normal
+      working-directory : src/server/Wordle/Wordle.Test
