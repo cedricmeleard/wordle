@@ -17,13 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="datas\5_letter_words_FR.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Domain\WordleGame.cs">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Compile>
+    <ProjectReference Include="..\Wordle\Wordle.Domain.csproj" />
   </ItemGroup>
 
 </Project>

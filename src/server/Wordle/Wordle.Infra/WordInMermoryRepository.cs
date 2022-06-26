@@ -1,12 +1,12 @@
 ﻿using System.Reflection;
-using Wordle.Infra;
+using Wordle.Domain.Ports;
 
-namespace Wordle.Repositories
+namespace Wordle.Infra
 {
     public class WordInMermoryRepository : IProvideWord
     {
-        static readonly Random randomizer = new Random(DateTime.Now.DayOfYear);
-        static readonly List<string> previousWords = new();
+        readonly Random randomizer = new Random(DateTime.Now.DayOfYear);
+        readonly List<string> previousWords = new();
 
         public string NewWord()
         {

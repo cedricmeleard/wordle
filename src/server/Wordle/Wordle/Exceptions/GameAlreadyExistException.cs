@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Wordle.Exceptions
+namespace Wordle.Domain.Exceptions
 {
     [Serializable]
     internal class GameAlreadyExistException : Exception

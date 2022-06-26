@@ -22,7 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Wordle\Wordle.csproj" />
+    <ProjectReference Include="..\Wordle.Infra\Wordle.Infra.csproj" />
+    <ProjectReference Include="..\Wordle\Wordle.Domain.csproj" />
   </ItemGroup>
 
 </Project>

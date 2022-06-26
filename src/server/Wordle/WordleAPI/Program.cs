@@ -1,12 +1,29 @@
+using Wordle.Domain.UseCases;
+using Wordle.Infra;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddCors();
+// Configure WordleService injection
+var wordRepository = new WordInMermoryRepository();
+var gameRepository = new GameInMemoryRepository();
+
+builder.Services.AddScoped<StartANewGame>(
+    sp => new StartANewGame(
+        wordRepository, gameRepository
+        ));
+
+builder.Services.AddScoped<MakeAGuess>(
+    sp => new MakeAGuess(gameRepository)
+    );
+
+builder.Services.AddScoped<DeleteAGame>(
+    sp => new DeleteAGame(gameRepository)
+    );
 
 builder.Services.AddCors(options =>
 {

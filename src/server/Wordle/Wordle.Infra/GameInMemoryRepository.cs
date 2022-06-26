@@ -1,12 +1,11 @@
 ﻿using Wordle.Domain;
-using Wordle.Exceptions;
-using Wordle.Infra;
+using Wordle.Domain.Ports;
 
-namespace Wordle.Repositories
+namespace Wordle.Infra
 {
     public class GameInMemoryRepository : IProvideGame
     {
-        static Dictionary<string, WordleGame> _games;
+        Dictionary<string, WordleGame> _games;
 
         public GameInMemoryRepository()
         {
@@ -23,9 +22,6 @@ namespace Wordle.Repositories
 
         public WordleGame Create(string userId, string word)
         {
-            if (_games.ContainsKey(userId))
-                throw new GameAlreadyExistException();
-            
             var newGame = new WordleGame(word);
             _games.Add(userId, newGame);
 

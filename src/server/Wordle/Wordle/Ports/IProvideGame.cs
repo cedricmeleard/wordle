@@ -1,6 +1,4 @@
-﻿using Wordle.Domain;
-
-namespace Wordle.Infra
+﻿namespace Wordle.Domain.Ports
 {
     public interface IProvideGame
     {

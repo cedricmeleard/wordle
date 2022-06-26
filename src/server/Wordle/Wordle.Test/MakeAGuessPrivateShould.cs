@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Reflection;
 using Wordle.Domain;
-using Wordle.Infra;
+using Wordle.Domain.Ports;
+using Wordle.Domain.UseCases;
 
 namespace Wordle.Test
 {
-    public class WordleServicePrivateTest
+    public class MakeAGuessPrivateShould
     {
         private class FakeGameRepository : IProvideGame
         {
@@ -37,11 +38,11 @@ namespace Wordle.Test
         public void CreateLine_Check(string candidate, string correctWord, Letter[] expected)
         {
 
-            var sut = new WordleService(
-                new FakeWordRepository(), new FakeGameRepository()
+            var sut = new MakeAGuess(
+                new FakeGameRepository()
                 );
 
-            MethodInfo? methodInfo = typeof(WordleService)
+            MethodInfo? methodInfo = typeof(MakeAGuess)
                             .GetMethod("CreateLine", BindingFlags.NonPublic | BindingFlags.Instance);
             
             object[] parameters = { candidate, correctWord };

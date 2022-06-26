@@ -1,4 +1,4 @@
-﻿namespace Wordle.Infra
+﻿namespace Wordle.Domain.Ports
 {
     public interface IProvideWord
     {

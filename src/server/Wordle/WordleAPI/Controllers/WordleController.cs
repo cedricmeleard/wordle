@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Wordle.Domain;
-using Wordle.Repositories;
+using Wordle.Domain.UseCases;
 
 namespace WordleAPI.Controllers
 {
@@ -11,25 +11,19 @@ namespace WordleAPI.Controllers
     public class WordleController : ControllerBase
     {
         private readonly ILogger<WordleController> _logger;
-        private static WordleService _service;
-        WordleService WordleService
-        {
-            get
-            {
-                if (_service == null)
-                {
-                    _service = new(
-                        new WordInMermoryRepository(),
-                        new GameInMemoryRepository()
-                        );
-                }
-                return _service;
-            }
-        }
-
-        public WordleController(ILogger<WordleController> logger)
+        private readonly StartANewGame startGame;
+        private readonly MakeAGuess makeGame;
+        private readonly DeleteAGame deleteGame;
+        
+        public WordleController(ILogger<WordleController> logger, 
+            StartANewGame startGame,
+            MakeAGuess makeGame,
+            DeleteAGame deleteGame)
         {
             _logger = logger;
+            this.startGame = startGame;
+            this.makeGame = makeGame;
+            this.deleteGame = deleteGame;
         }
 
 
@@ -41,7 +35,7 @@ namespace WordleAPI.Controllers
             if (userId == null)
                 throw new ArgumentNullException(nameof(userId));
 
-            var game = WordleService.StartGame(userId);
+            var game = startGame.StartGame(userId);
 
             return new WordleGameDto(game);
         }
@@ -51,7 +45,7 @@ namespace WordleAPI.Controllers
         {
             _logger.LogDebug($"Trying the word {word}");
 
-            var game = WordleService.TryWord(userId, word);
+            var game = makeGame.Make(userId, word);
             return new WordleGameDto(game);
         }
 
@@ -59,7 +53,7 @@ namespace WordleAPI.Controllers
         public bool Reset([FromQuery()] string userId)
         {
             _logger.LogDebug($"Reset game for user {userId}");
-            return WordleService.Reset(userId);
+            return deleteGame.Reset(userId);
         }
     }
 }
